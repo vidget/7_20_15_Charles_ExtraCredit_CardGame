@@ -8,9 +8,25 @@ namespace _7_20_15_Charles_ExtraCredit_CardGame
 {
     class Cards
     {
+        CryptoRandom rng = new CryptoRandom();
+        //Console.WriteLine(rng.Next());
+        //Console.WriteLine(rng.Next(10));
+        //Console.WriteLine(rng.Next(18, 22));
+
+
+
         List<string> userHand = new List<string>();//holds the userHand strings
         public string playerName { get; set; }//holds the player NAME
-        
+        public int[] handValues = { 0, 0, 0, 0, 0 };
+        public int[] handSuit = { 0, 0, 0, 0, 0 }; 
+        public int[] deckValue ={14,2,3,4,5,6,7,8,9,10,11,12,13,
+                                 14,2,3,4,5,6,7,8,9,10,11,12,13,
+                                 14,2,3,4,5,6,7,8,9,10,11,12,13,
+                                 14,2,3,4,5,6,7,8,9,10,11,12,13};
+        public int[] deckSuit ={1,1,1,1,1,1,1,1,1,1,1,1,1,
+                                 2,2,2,2,2,2,2,2,2,2,2,2,2,
+                                 3,3,3,3,3,3,3,3,3,3,3,3,3,
+                                 4,4,4,4,4,4,4,4,4,4,4,4,4};
         //creates a dictionary that holds 52 card strings with unicode card symbol \u0003 = Hearts \u0004 = Diamonds \u0005 = Clubs \u0006 = Spades
         Dictionary<int, string> cards = new Dictionary<int, string>()
             { 
@@ -78,15 +94,34 @@ namespace _7_20_15_Charles_ExtraCredit_CardGame
         public void addCardtoHand(int cardNumber)// List<string> userHand)
         {
             userHand.Add(cards[cardNumber]);
+
+            
         }
 
+        public void addCardValue(int cardNumber, int arrayValue)
+        {
+
+            handValues[arrayValue] = deckValue[cardNumber];
+            handSuit[arrayValue] = deckSuit[cardNumber];
+            
+        }
+
+        public void sortValueArray()
+        {
+
+            Array.Sort(handValues);
+            Array.Sort(handSuit);
+
+        }
 
 
         public int drawCard()
         {
+            //rng.Next(0, 52);
+
             //generates a random number between 0-51
-            Random random = new Random((int)DateTime.Now.Ticks);
-            int randomNumber = random.Next(0, 52);
+           //Random random = new Random((int)DateTime.Now.Ticks);//
+            int randomNumber = rng.Next(0, 52);
             return randomNumber;
 
         }
@@ -106,18 +141,29 @@ namespace _7_20_15_Charles_ExtraCredit_CardGame
             }
             Console.WriteLine();
 
+           
+            ///USED for testing shows card values in the hand
+            for (int i = 0; i <5; i++)
+            {
+                Console.Write(" " + handValues[i]);
+            }
+
 
         }
 
         public bool checkIfAvailableCard(int tempCard, int[] deck)//checks to see if the deck array contains a 1 or 0 taken or not, returns a BOOL
         {
             if (deck[tempCard] == 1)
-                return false;//card is taken
+                return false;//card not taken
             else
-                return true;// not taken
+                return true;// isTaken
         }
 
-    }
-}
+        
 
+
+
+    }
+
+}
 
